@@ -5,18 +5,24 @@ public class Driver {
 
 	private static void display(ResultSet myRs) throws SQLException {
 		while (myRs.next()) {
-			String lastName = myRs.getString("last_name");
-			String firstName = myRs.getString("first_name");
-			double salary = myRs.getDouble("salary");
-			String department = myRs.getString("department");
+			String lastName = myRs.getString("first_name");
+			String firstName = myRs.getString("last_name");
+			String gender = myRs.getString("gender");
+			String gradeLevel = myRs.getString("grade_level");
+			String IEP = myRs.getString("IEP");
+			int disruptive = myRs.getInt("Disruptive_1to5_LowtoHigh");
+			int offTask = myRs.getInt("OffTask_1to5_LowtoHigh");
+			int responsible = myRs.getInt("Not_Responsible_1to5_LowtoHigh");
+			int getAlong = myRs.getInt("Not_GetAlong_1to5_LowtoHigh");
 
-			System.out.printf("%s, %s, %.2f, %s\n", lastName, firstName, salary, department);
+			System.out.printf("%s, %s, %s, %s, %s, %d, %d, %d, %d\n", lastName,
+			firstName, gender, gradeLevel, IEP, disruptive, offTask, responsible, getAlong);
 		}
 	}
 
 	public static void main(String[] args) {
 
-		String url = "jdbc:mysql://localhost:3306/demo?useSSL=false";
+		String url = "jdbc:mysql://localhost:3306/school?useSSL=false";
 		String user = "root";
 		String password = "root";
 		Connection myConn = null;
@@ -28,19 +34,23 @@ public class Driver {
 			myConn = DriverManager.getConnection(url, user, password);
 
 			//2. Prepare a statement
-			myStmt = myConn.prepareStatement("select * from employees where salary > ? and department=?");
+			myStmt = myConn.prepareStatement("select * from students where Grade_Level = ? and Disruptive_1to5_LowtoHigh = ?");
 
 			//3. Set the parameters
-			myStmt.setDouble(1, 80000);
-			myStmt.setString(2,  "Legal");
+			myStmt.setInt(1, 6);
+			myStmt.setInt(2,  6);
 
 			//4. Execute SQL query
 			myRs = myStmt.executeQuery();
 
 			//5. Display the result set
-			display(myRs);
+			if (myRs.next() == false) {
+				System.out.println("There are no results for your query.");
+			} else { display(myRs);
+			} while (myRs.next());
 
 		}
+
 
 		catch (Exception exc) {
 			exc.printStackTrace();
