@@ -4,12 +4,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JTextArea;
 
 public class MainFrame extends JFrame{
 
-	private JTextArea textArea;
+	//private JTextArea textArea;
 	private JButton btn;
+	private TextPanel textPanel;
 
 	/**
 	 *
@@ -41,18 +41,19 @@ public class MainFrame extends JFrame{
 
 		frame.setLayout (new BorderLayout());
 
-		textArea = new JTextArea();
+		//textArea = new JTextArea();
 		btn = new JButton("Click Me!");
+		textPanel = new TextPanel();
 
 		btn.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				textArea.append("action action action - Why don't you do something?!\n");
+				textPanel.appendText("action action action - Why don't you do something?!\n");
 			}
 
 		});
 
-		add(textArea, BorderLayout.CENTER);
+		add(textPanel, BorderLayout.CENTER);
 		add(btn, BorderLayout.SOUTH);
 	}
 }

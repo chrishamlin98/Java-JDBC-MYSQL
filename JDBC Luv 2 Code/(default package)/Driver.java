@@ -38,7 +38,7 @@ public class Driver {
 
 			//3. Set the parameters
 			myStmt.setInt(1, 6);
-			myStmt.setInt(2,  6);
+			myStmt.setInt(2, 6);
 
 			//4. Execute SQL query
 			myRs = myStmt.executeQuery();
